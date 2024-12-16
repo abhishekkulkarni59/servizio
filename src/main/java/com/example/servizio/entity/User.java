@@ -1,6 +1,6 @@
 package com.example.servizio.entity;
 
-import com.example.servizio.dto.UserDto;
+import com.example.servizio.payload.UserDto;
 import com.example.servizio.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,6 +29,5 @@ public class User {
         userDto.setRole(role);
         return userDto;
     }
-
 
 }

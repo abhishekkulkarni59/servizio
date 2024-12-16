@@ -1,12 +1,12 @@
 package com.example.servizio.service.authentication;
 
-import com.example.servizio.dto.SignupRequestDTO;
-import com.example.servizio.dto.UserDto;
+import com.example.servizio.payload.SignupRequest;
+import com.example.servizio.payload.UserDto;
 
 public interface AuthService {
 
-    public UserDto signupClient(SignupRequestDTO signupRequestDTO);
+    public UserDto signupClient(SignupRequest signupRequest);
     public Boolean presentByEmail(String email);
-    public UserDto signupCompany(SignupRequestDTO signupRequestDTO);
+    public UserDto signupCompany(SignupRequest signupRequest);
 
 }

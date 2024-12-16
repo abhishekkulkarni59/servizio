@@ -1,7 +1,7 @@
 package com.example.servizio.service.authentication;
 
-import com.example.servizio.dto.SignupRequestDTO;
-import com.example.servizio.dto.UserDto;
+import com.example.servizio.payload.SignupRequest;
+import com.example.servizio.payload.UserDto;
 import com.example.servizio.entity.User;
 import com.example.servizio.enums.UserRole;
 import com.example.servizio.repository.UserRepository;
@@ -15,21 +15,21 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserDto signupClient(SignupRequestDTO signupRequestDTO) {
-        if (signupRequestDTO.getEmail() == null || signupRequestDTO.getEmail().isEmpty()) {
+    public UserDto signupClient(SignupRequest signupRequest) {
+        if (signupRequest.getEmail() == null || signupRequest.getEmail().isEmpty()) {
             throw new IllegalArgumentException("Email is required.");
         }
-        if (signupRequestDTO.getPassword() == null || signupRequestDTO.getPassword().isEmpty()) {
+        if (signupRequest.getPassword() == null || signupRequest.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password is required.");
         }
 
         // Create a new User entity and set the properties
         User user = new User();
-        user.setEmail(signupRequestDTO.getEmail());
-        user.setPassword(new BCryptPasswordEncoder().encode(signupRequestDTO.getPassword()));
-        user.setName(signupRequestDTO.getName());
-        user.setPhone(signupRequestDTO.getPhone());
-        user.setLastName(signupRequestDTO.getLastName());
+        user.setEmail(signupRequest.getEmail());
+        user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
+        user.setName(signupRequest.getName());
+        user.setPhone(signupRequest.getPhone());
+        user.setLastName(signupRequest.getLastName());
         user.setRole(UserRole.CLIENT);
 
         // Save the user to the repository
@@ -40,20 +40,20 @@ public class AuthServiceImpl implements AuthService {
         return userRepository.findFirstByEmail(email) != null;
     }
 
-    public UserDto signupCompany(SignupRequestDTO signupRequestDTO) {
-        if (signupRequestDTO.getEmail() == null || signupRequestDTO.getEmail().isEmpty()) {
+    public UserDto signupCompany(SignupRequest signupRequest) {
+        if (signupRequest.getEmail() == null || signupRequest.getEmail().isEmpty()) {
             throw new IllegalArgumentException("Email is required.");
         }
-        if (signupRequestDTO.getPassword() == null || signupRequestDTO.getPassword().isEmpty()) {
+        if (signupRequest.getPassword() == null || signupRequest.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password is required.");
         }
 
         // Create a new User entity and set the properties
         User user = new User();
-        user.setEmail(signupRequestDTO.getEmail());
-        user.setPassword(new BCryptPasswordEncoder().encode(signupRequestDTO.getPassword()));
-        user.setName(signupRequestDTO.getName());
-        user.setPhone(signupRequestDTO.getPhone());
+        user.setEmail(signupRequest.getEmail());
+        user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
+        user.setName(signupRequest.getName());
+        user.setPhone(signupRequest.getPhone());
         user.setRole(UserRole.COMPANY);
 
         // Save the user to the repository

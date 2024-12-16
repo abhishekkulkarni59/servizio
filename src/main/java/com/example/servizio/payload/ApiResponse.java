@@ -1,4 +1,4 @@
-package com.example.servizio.dto;
+package com.example.servizio.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

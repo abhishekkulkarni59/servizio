@@ -1,10 +1,9 @@
-package com.example.servizio.dto;
+package com.example.servizio.payload;
 
-import com.example.servizio.enums.UserRole;
 import lombok.Data;
 
 @Data
-public class SignupRequestDTO {
+public class SignupRequest {
 
     private long id;
 
@@ -13,6 +12,5 @@ public class SignupRequestDTO {
     private String name;
     private String lastName;
     private String phone;
-    private UserRole role;
 
 }

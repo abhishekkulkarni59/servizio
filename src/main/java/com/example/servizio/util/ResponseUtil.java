@@ -1,13 +1,13 @@
 package com.example.servizio.util;
 
-import com.example.servizio.dto.ApiResponse;
+import com.example.servizio.payload.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class ResponseUtil {
 
     public static ResponseEntity<?> buildResponse(int code, String message, Object data) {
-        ApiResponse<Object> apiResponse = new com.example.servizio.dto.ApiResponse<>(code, message, data);
+        ApiResponse<Object> apiResponse = new com.example.servizio.payload.ApiResponse<>(code, message, data);
         return ResponseEntity.ok(apiResponse);
     }
 

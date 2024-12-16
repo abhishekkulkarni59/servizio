@@ -1,4 +1,4 @@
-package com.example.servizio.dto;
+package com.example.servizio.payload;
 
 import com.example.servizio.enums.UserRole;
 import lombok.Data;
