@@ -27,6 +27,9 @@ public class User {
         userDto.setEmail(email);
         userDto.setName(name);
         userDto.setRole(role);
+        userDto.setPassword(password);
+        userDto.setPhone(phone);
+        userDto.setLastName(lastName);
         return userDto;
     }
 

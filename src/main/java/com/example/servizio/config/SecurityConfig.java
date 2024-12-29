@@ -17,7 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.example.servizio.security.JWTFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
@@ -31,7 +36,7 @@ public class SecurityConfig {
     private JWTFilter jwtFilter;
 
     private static final String[] PUBLIC_URLS = {
-            "/api/v1/auth"
+            "/api/v1/auth/**"
 //            "/v3/api-docs/**",
 //            "/v2/api-docs/**",
 //            "/swagger-resources/**",
@@ -46,7 +51,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(customizer -> customizer.disable())
+        http.cors().configurationSource(corsConfigurationSource())
+                .and().csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PUBLIC_URLS).permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/api/users/").hasRole("ADMIN") // Only ADMIN role
@@ -70,5 +76,20 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Authorization"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", configuration);
+        return source;
+    }
+
 
 }

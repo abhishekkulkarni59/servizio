@@ -15,10 +15,10 @@ public class ResponseUtil {
         ApiResponse<Object> apiResponse = new ApiResponse<>(code, message, null);
         return new ResponseEntity<>(apiResponse, status);
     }
+
     public static ResponseEntity<?> buildSuccessResponse(int code, String message, Object data, HttpStatus status) {
-        ApiResponse response = new ApiResponse(code, message, data);
+        ApiResponse<Object> response = new ApiResponse<>(code, message, data);
         return new ResponseEntity<>(response, status);
     }
-
 
 }
