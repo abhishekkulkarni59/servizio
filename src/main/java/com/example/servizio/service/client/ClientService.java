@@ -1,6 +1,7 @@
 package com.example.servizio.service.client;
 
 import com.example.servizio.payload.AdDTO;
+import com.example.servizio.payload.AdDetailsForClientDTO;
 import com.example.servizio.payload.ReservationDTO;
 import com.example.servizio.payload.ReviewDTO;
 import org.springframework.data.domain.Page;

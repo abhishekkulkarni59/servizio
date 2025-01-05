@@ -2,15 +2,19 @@ package com.example.servizio.service.company;
 
 import com.example.servizio.entity.Ad;
 import com.example.servizio.entity.User;
+import com.example.servizio.entity.Reservation;
+import com.example.servizio.enums.ReservationStatus;
 import com.example.servizio.payload.AdDTO;
 import com.example.servizio.payload.ReservationDTO;
 import com.example.servizio.repository.AdRepository;
+import com.example.servizio.repository.ReservationRepository;
 import com.example.servizio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,6 +26,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
     private AdRepository adRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     public Ad postAd(Long userId, AdDTO adDTO) throws IOException {
 
@@ -93,12 +100,35 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<ReservationDTO> getAllAdBookings(long companyId) {
-        return List.of();
+    public List<ReservationDTO> getAllAdBookings(long companyId)
+    {
+        return reservationRepository.findAllByCompanyId(companyId)
+                .stream()
+                .map(Reservation::getReservationDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public boolean changeBookingStatus(long bookingId, String status) {
+    public boolean changeBookingStatus(long bookingId, String status)
+    {
+        Optional<Reservation> optionalReservation = reservationRepository.findById(bookingId);
+        if(optionalReservation.isPresent())
+        {
+            Reservation existingReservation = optionalReservation.get();
+            if(Objects.equals(status,"Approve"))
+            {
+                existingReservation.setReservationStatus(ReservationStatus.APPROVED);
+            }
+            else if(Objects.equals(status,"Cancel"))
+            {
+                existingReservation.setReservationStatus(ReservationStatus.REJECTED);
+            }
+            else {
+                existingReservation.setReservationStatus(ReservationStatus.REJECTED);
+            }
+            reservationRepository.save(existingReservation);
+            return true;
+        }
         return false;
     }
 

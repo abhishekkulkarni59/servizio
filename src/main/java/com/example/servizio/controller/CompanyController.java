@@ -3,8 +3,12 @@ package com.example.servizio.controller;
 import com.example.servizio.entity.Ad;
 import com.example.servizio.enums.ApiErrorCode;
 import com.example.servizio.payload.AdDTO;
+import com.example.servizio.payload.ReservationDTO;
 import com.example.servizio.service.company.CompanyService;
 import com.example.servizio.util.ResponseUtil;
+import jakarta.servlet.http.HttpServletResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,5 +97,38 @@ public class CompanyController {
         }
     }
 
+//  Get All Bookings By Company Id
+    @GetMapping("/bookings/{companyId}")
+    public  ResponseEntity<?> getAllAdBookings(@PathVariable long companyId)
+    {
+        try {
+            List<ReservationDTO> bookings = companyService.getAllAdBookings(companyId);
+
+            if (bookings.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No bookings found for the company with ID: " + companyId);
+            }
+            return ResponseEntity.ok(bookings);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while retrieving the bookings.");
+        }
+    }
+
+//  Change The Booking Status
+    @GetMapping("/booking/{bookingId}/{status}")
+    public  ResponseEntity<?> changeBookingStatus(@PathVariable long bookingId, @PathVariable String status, HttpServletResponse response) throws JSONException, IOException {
+        boolean success= companyService.changeBookingStatus(bookingId,status);
+        if(success)
+        {
+            response.getWriter().write(new JSONObject()
+                    .put("message", "\t\n" +
+                            "Booking status updated successfully.")
+                    .toString());
+            return ResponseEntity.ok().build();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No bookings found for this Booking Id: " + bookingId);
+        }
+    }
 
 }

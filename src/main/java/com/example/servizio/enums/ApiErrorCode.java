@@ -21,7 +21,7 @@ public enum ApiErrorCode {
     // Common Error Codes
     COMPANY_EXISTS(3101, "Company already exists with this Email!"),
     CLIENT_EXISTS(3102, "Client already exists with this Email!"),
-    CLIENT_BOOKING_FAILED(3108,"Booking successful."),
+    CLIENT_BOOKING_SUCCESSFUL(3108,"Booking successful."),
     CLIENT_DOES_NOT_EXIST(3109,"User not found."),
     BOOKING_EXIST(3110,"Booking conflict: The ad is already booked for this date."),
 
