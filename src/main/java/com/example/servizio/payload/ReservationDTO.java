@@ -1,5 +1,7 @@
 package com.example.servizio.payload;
 
+import com.example.servizio.enums.ReservationStatus;
+import com.example.servizio.enums.ReviewStatus;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,9 +15,9 @@ public class ReservationDTO {
 
     private String serviceName;
 
-//    private ReservationStatus reservationStatus;
+    private ReservationStatus reservationStatus;
 
-//    private ReviewStatus reviewStatus;
+    private ReviewStatus reviewStatus;
 
     private Long userId;
 

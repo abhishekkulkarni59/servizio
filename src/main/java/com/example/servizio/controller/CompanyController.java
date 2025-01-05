@@ -20,6 +20,20 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
+//  Get All Ads By UserId
+    @GetMapping("/ads/{userId}")
+    public ResponseEntity<?> getAllAdsByUserId(@PathVariable long userId)
+    {
+        List<AdDTO> ads = companyService.getAllAds(userId);
+
+        if (ads.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No ads found for the user with ID: " + userId);
+        }
+
+        return ResponseEntity.ok(companyService.getAllAds(userId));
+    }
+
 //  Create Ad
     @PostMapping("/ad/{userId}")
     public ResponseEntity<?> postAd(@PathVariable Long userId, @ModelAttribute AdDTO adDTO) throws IOException {
@@ -33,20 +47,6 @@ public class CompanyController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the ad.");
         }
-    }
-
-//  Get All Ads By UserId
-    @GetMapping("/ads/{userId}")
-    public ResponseEntity<?> getAllAdsByUserId(@PathVariable long userId)
-    {
-        List<AdDTO> ads = companyService.getAllAds(userId);
-
-        if (ads.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No ads found for the user with ID: " + userId);
-        }
-
-        return ResponseEntity.ok(companyService.getAllAds(userId));
     }
 
 //  Get Ad By Id

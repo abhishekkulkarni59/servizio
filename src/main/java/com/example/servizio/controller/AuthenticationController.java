@@ -50,6 +50,7 @@ public class AuthenticationController {
 
     public static final String HEADER_STRING = "Authorization";
 
+//  Client Registration
     @PostMapping("/client/sign-up")
     public ResponseEntity<?> signupClient(@RequestBody SignupRequest signupRequest) {
 
@@ -86,6 +87,7 @@ public class AuthenticationController {
                 HttpStatus.CREATED);
     }
 
+//  Company Registration
     @PostMapping("/company/sign-up")
     public ResponseEntity<?> signupCompany(@RequestBody SignupRequest signupRequest) {
 
@@ -121,6 +123,7 @@ public class AuthenticationController {
                 createdUser);
     }
 
+//  Login
     @PostMapping("/authenticate")
     public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {
         try {
