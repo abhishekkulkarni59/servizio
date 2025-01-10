@@ -62,7 +62,7 @@ class CompanyServiceImplTest {
 
         // Mock behavior
         Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        Mockito.when(adRepository.save(Mockito.<Ad>any())).thenReturn(savedAd);
+        Mockito.when(adRepository.save(Mockito.any(Ad.class))).thenReturn(savedAd);
 
         // Act
         Ad result = companyService.postAd(userId, adDTO);
